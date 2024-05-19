@@ -14,6 +14,8 @@ Welcome to my GitHub repository, which contains the coursework and assignments I
 - **AI6126 - Advanced Computer Vision**
 - **AI6127 - Deep Neural Networks for Natural Language Processing**
 
+I excluded AI6104 - Math of AI due to the lack of PDF-based coursework.
+
 ## Contents
 
 Each folder contains the following types of files:
