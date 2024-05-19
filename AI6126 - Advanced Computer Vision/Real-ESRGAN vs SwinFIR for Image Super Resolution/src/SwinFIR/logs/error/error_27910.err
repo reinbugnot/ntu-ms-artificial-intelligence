@@ -1,0 +1,38 @@
+/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
+  warnings.warn(
+/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/functional.py:504: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/aten/src/ATen/native/TensorShape.cpp:3526.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Traceback (most recent call last):
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/inference_swinfir.py", line 164, in <module>
+    main()
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/inference_swinfir.py", line 51, in main
+    output = model(img)
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 527, in forward
+    x = self.conv_after_body(self.forward_features(x)) + x
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 506, in forward_features
+    x = layer(x, x_size)
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 314, in forward
+    return self.patch_embed(self.conv(self.patch_unembed(self.residual_group(x, x_size), x_size))) + x
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 225, in forward
+    x = blk(x, x_size)
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 122, in forward
+    x_windows = window_partition(shifted_x, self.window_size)  # nw*b, window_size, window_size, c
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_utils.py", line 89, in window_partition
+    x = x.view(b, h // window_size, window_size, w // window_size, window_size, c)
+RuntimeError: shape '[1, 8, 16, 8, 16, 64]' is invalid for input of size 1115136

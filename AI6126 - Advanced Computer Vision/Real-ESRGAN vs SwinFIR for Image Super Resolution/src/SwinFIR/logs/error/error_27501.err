@@ -1,0 +1,10 @@
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/train.py", line 10, in <module>
+    train_pipeline(root_path)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/train.py", line 93, in train_pipeline
+    opt, args = parse_options(root_path, is_train=True)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/utils/options.py", line 94, in parse_options
+    with open(args.opt, mode='r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'options/train/SRResNet_SRGAN/train_SwinFIR-T_SRx4_CUSTOM.yml'

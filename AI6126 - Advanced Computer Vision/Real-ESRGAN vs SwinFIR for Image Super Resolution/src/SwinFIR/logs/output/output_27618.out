@@ -1,0 +1,48 @@
+Disable distributed.
+Path already exists. Rename it to /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM_archived_20240425_202235
+Path already exists. Rename it to /home/msai/bugn0001/ai6126-project-2/SwinFIR/tb_logger/train_SwinFIR-T_SRx4_CUSTOM_archived_20240425_202235
+Window Size within SwinFIR: 12
+Window Size within RSTB: 12
+Window Size within Basic Layer: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size within RSTB: 12
+Window Size within Basic Layer: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size within RSTB: 12
+Window Size within Basic Layer: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size within RSTB: 12
+Window Size within Basic Layer: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size within SwinFIR: 12
+Window Size within RSTB: 12
+Window Size within Basic Layer: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size within RSTB: 12
+Window Size within Basic Layer: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size within RSTB: 12
+Window Size within Basic Layer: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size within RSTB: 12
+Window Size within Basic Layer: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+Window Size in window_partition: 12
+SHAPE BEFORE PATCH EMBED: torch.Size([8, 60, 128, 128])
+SHAPE AFTER PATCH EMBED: torch.Size([8, 16384, 60])
+X shape on Transformer Block: torch.Size([8, 16384, 60])
+X shape after view: torch.Size([8, 128, 128, 60])
+Shifted X shape: torch.Size([8, 128, 128, 60])
+Window Size within ST Block: 12
+Window Size in window_partition: 12

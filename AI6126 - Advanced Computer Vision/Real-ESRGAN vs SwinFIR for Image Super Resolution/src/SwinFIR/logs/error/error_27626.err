@@ -1,0 +1,215 @@
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
+  warnings.warn(
+2024-04-25 20:32:50,577 INFO: 
+                ____                _       _____  ____
+               / __ ) ____ _ _____ (_)_____/ ___/ / __ \
+              / __  |/ __ `// ___// // ___/\__ \ / /_/ /
+             / /_/ // /_/ /(__  )/ // /__ ___/ // _, _/
+            /_____/ \__,_//____//_/ \___//____//_/ |_|
+     ______                   __   __                 __      __
+    / ____/____   ____   ____/ /  / /   __  __ _____ / /__   / /
+   / / __ / __ \ / __ \ / __  /  / /   / / / // ___// //_/  / /
+  / /_/ // /_/ // /_/ // /_/ /  / /___/ /_/ // /__ / /<    /_/
+  \____/ \____/ \____/ \____/  /_____/\____/ \___//_/|_|  (_)
+    
+Version Information: 
+	BasicSR: 1.3.5
+	PyTorch: 2.1.2
+	TorchVision: 0.16.2
+2024-04-25 20:32:50,578 INFO: 
+  name: train_SwinFIR-T_SRx4_CUSTOM
+  model_type: SwinFIRModel
+  scale: 4
+  num_gpu: 1
+  manual_seed: 0
+  gt_usm: True
+  resize_prob: [0.2, 0.7, 0.1]
+  resize_range: [0.2, 1.5]
+  gaussian_noise_prob: 0.5
+  noise_range: [1, 20]
+  poisson_scale_range: [0.05, 2]
+  gray_noise_prob: 0.4
+  jpeg_range: [50, 95]
+  second_blur_prob: 0.8
+  resize_prob2: [0.3, 0.4, 0.3]
+  resize_range2: [0.3, 1.2]
+  gaussian_noise_prob2: 0.5
+  noise_range2: [1, 15]
+  poisson_scale_range2: [0.05, 1.5]
+  gray_noise_prob2: 0.4
+  jpeg_range2: [70, 95]
+  gt_size: 512
+  queue_size: 176
+  datasets:[
+    train:[
+      name: FFHQ_train
+      type: FFHQsubDataset
+      dataroot_gt: data/FFHQ/train/GT
+      meta_info: data/FFHQ/train/meta_info_FFHQ5000sub_GT.txt
+      io_backend:[
+        type: disk
+      ]
+      blur_kernel_size: 21
+      kernel_list: ['iso', 'aniso', 'generalized_iso', 'generalized_aniso', 'plateau_iso', 'plateau_aniso']
+      kernel_prob: [0.45, 0.25, 0.12, 0.03, 0.12, 0.03]
+      sinc_prob: 0.1
+      blur_sigma: [0.2, 3]
+      betag_range: [0.5, 4]
+      betap_range: [1, 2]
+      blur_kernel_size2: 21
+      kernel_list2: ['iso', 'aniso', 'generalized_iso', 'generalized_aniso', 'plateau_iso', 'plateau_aniso']
+      kernel_prob2: [0.45, 0.25, 0.12, 0.03, 0.12, 0.03]
+      sinc_prob2: 0.1
+      blur_sigma2: [0.2, 1.5]
+      betag_range2: [0.5, 4]
+      betap_range2: [1, 2]
+      final_sinc_prob: 0.8
+      gt_size: 512
+      use_hflip: True
+      use_rot: False
+      use_shuffle: True
+      num_worker_per_gpu: 6
+      batch_size_per_gpu: 8
+      dataset_enlarge_ratio: 1000
+      prefetch_mode: None
+      phase: train
+      scale: 4
+    ]
+    val:[
+      name: FFHQ_val
+      type: PairedImageDataset
+      dataroot_gt: data/FFHQ/val/GT
+      dataroot_lq: data/FFHQ/val/LQ
+      io_backend:[
+        type: disk
+      ]
+      phase: val
+      scale: 4
+    ]
+  ]
+  network_g:[
+    type: SwinFIR
+    upscale: 4
+    in_chans: 3
+    img_size: 60
+    window_size: 16
+    img_range: 1.0
+    depths: [6, 5, 5, 6]
+    embed_dim: 60
+    num_heads: [6, 6, 6, 6]
+    mlp_ratio: 2
+    upsampler: pixelshuffledirect
+    resi_connection: HSFB
+  ]
+  path:[
+    pretrain_network_g: None
+    strict_load_g: True
+    resume_state: None
+    experiments_root: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM
+    models: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/models
+    training_states: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/training_states
+    log: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM
+    visualization: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/visualization
+  ]
+  train:[
+    ema_decay: 0.999
+    optim_g:[
+      type: Adam
+      lr: 0.0002
+      weight_decay: 0
+      betas: [0.9, 0.99]
+    ]
+    scheduler:[
+      type: MultiStepLR
+      milestones: [300000, 500000, 650000, 700000, 750000]
+      gamma: 0.5
+    ]
+    total_iter: 800000
+    warmup_iter: -1
+    pixel_opt:[
+      type: CharbonnierLossColor
+      loss_weight: 1.0
+      reduction: mean
+    ]
+  ]
+  val:[
+    val_freq: 10000.0
+    save_img: False
+    pbar: False
+    metrics:[
+      psnr:[
+        type: calculate_psnr
+        crop_border: 4
+        test_y_channel: True
+        better: higher
+      ]
+      ssim:[
+        type: calculate_ssim
+        crop_border: 4
+        test_y_channel: True
+        better: higher
+      ]
+    ]
+  ]
+  logger:[
+    print_freq: 200
+    save_checkpoint_freq: 10000.0
+    use_tb_logger: True
+    wandb:[
+      project: None
+      resume_id: None
+    ]
+  ]
+  dist_params:[
+    backend: nccl
+    port: 29500
+  ]
+  dist: False
+  rank: 0
+  world_size: 1
+  auto_resume: False
+  is_train: True
+  root_path: /home/msai/bugn0001/ai6126-project-2/SwinFIR
+
+2024-04-25 20:32:50,721 INFO: Dataset [FFHQsubDataset] - FFHQ_train is built.
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 6 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+2024-04-25 20:32:50,722 INFO: Training statistics:
+	Number of train images: 5000
+	Dataset enlarge ratio: 1000
+	Batch size per gpu: 8
+	World size (gpu number): 1
+	Require iter number per epoch: 625000
+	Total epochs: 2; iters: 800000.
+2024-04-25 20:32:50,737 INFO: Dataset [PairedImageDataset] - FFHQ_val is built.
+2024-04-25 20:32:50,737 INFO: Number of val images/folders in FFHQ_val: 400
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torch/functional.py:504: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/aten/src/ATen/native/TensorShape.cpp:3526.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Traceback (most recent call last):
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/train.py", line 10, in <module>
+    train_pipeline(root_path)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/train.py", line 124, in train_pipeline
+    model = build_model(opt)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/models/__init__.py", line 27, in build_model
+    model = MODEL_REGISTRY.get(opt['model_type'])(opt)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/models/swinfir_model.py", line 19, in __init__
+    super(SwinFIRModel, self).__init__(opt)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/models/sr_model.py", line 22, in __init__
+    self.net_g = build_network(opt['network_g'])
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/archs/__init__.py", line 22, in build_network
+    net = ARCH_REGISTRY.get(network_type)(**opt)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 428, in __init__
+    layer = RSTB(
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 282, in __init__
+    self.residual_group = BasicLayer(
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 198, in __init__
+    self.blocks = nn.ModuleList([
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 199, in <listcomp>
+    SwinTransformerBlock(
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 75, in __init__
+    attn_mask = self.calculate_mask(self.input_resolution)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_arch.py", line 95, in calculate_mask
+    mask_windows = window_partition(img_mask, self.window_size)  # nw, window_size, window_size, 1
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/archs/swinfir_utils.py", line 89, in window_partition
+    x = x.view(b, h // window_size, window_size, w // window_size, window_size, c)
+RuntimeError: shape '[1, 3, 16, 3, 16, 1]' is invalid for input of size 3600

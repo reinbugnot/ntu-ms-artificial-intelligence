@@ -1,0 +1,135 @@
+Disable distributed.
+Path already exists. Rename it to /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM_archived_20240425_204338
+Path already exists. Rename it to /home/msai/bugn0001/ai6126-project-2/SwinFIR/tb_logger/train_SwinFIR-T_SRx4_CUSTOM_archived_20240425_204338
+Window Size within SwinFIR: 8
+Window Size within RSTB: 8
+Window Size within Basic Layer: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size within RSTB: 8
+Window Size within Basic Layer: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size within RSTB: 8
+Window Size within Basic Layer: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size within RSTB: 8
+Window Size within Basic Layer: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size within SwinFIR: 8
+Window Size within RSTB: 8
+Window Size within Basic Layer: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size within RSTB: 8
+Window Size within Basic Layer: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size within RSTB: 8
+Window Size within Basic Layer: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size within RSTB: 8
+Window Size within Basic Layer: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+GT_SIZE 512
+SELF.LQ Shape: torch.Size([8, 3, 128, 128])
+SHAPE BEFORE PATCH EMBED: torch.Size([8, 64, 128, 128])
+SHAPE AFTER PATCH EMBED: torch.Size([8, 16384, 64])
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8
+X shape on Transformer Block: torch.Size([8, 16384, 64])
+X shape after view: torch.Size([8, 128, 128, 64])
+Shifted X shape: torch.Size([8, 128, 128, 64])
+Window Size within ST Block: 8
+Window Size in window_partition: 8
+Window Size in window_partition: 8

@@ -1,0 +1,41 @@
+Disable distributed.
+Path already exists. Rename it to /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM_archived_20240425_204849
+Path already exists. Rename it to /home/msai/bugn0001/ai6126-project-2/SwinFIR/tb_logger/train_SwinFIR-T_SRx4_CUSTOM_archived_20240425_204849
+Window Size within SwinFIR: 16
+Window Size within RSTB: 16
+Window Size within Basic Layer: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size within RSTB: 16
+Window Size within Basic Layer: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size within RSTB: 16
+Window Size within Basic Layer: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size within RSTB: 16
+Window Size within Basic Layer: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size within SwinFIR: 16
+Window Size within RSTB: 16
+Window Size within Basic Layer: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size within RSTB: 16
+Window Size within Basic Layer: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size within RSTB: 16
+Window Size within Basic Layer: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size within RSTB: 16
+Window Size within Basic Layer: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16
+Window Size in window_partition: 16

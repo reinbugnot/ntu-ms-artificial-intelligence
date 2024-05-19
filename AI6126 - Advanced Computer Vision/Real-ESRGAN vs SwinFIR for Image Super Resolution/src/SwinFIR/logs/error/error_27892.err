@@ -1,0 +1,655 @@
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
+  warnings.warn(
+2024-04-26 11:25:29,854 INFO: 
+                ____                _       _____  ____
+               / __ ) ____ _ _____ (_)_____/ ___/ / __ \
+              / __  |/ __ `// ___// // ___/\__ \ / /_/ /
+             / /_/ // /_/ /(__  )/ // /__ ___/ // _, _/
+            /_____/ \__,_//____//_/ \___//____//_/ |_|
+     ______                   __   __                 __      __
+    / ____/____   ____   ____/ /  / /   __  __ _____ / /__   / /
+   / / __ / __ \ / __ \ / __  /  / /   / / / // ___// //_/  / /
+  / /_/ // /_/ // /_/ // /_/ /  / /___/ /_/ // /__ / /<    /_/
+  \____/ \____/ \____/ \____/  /_____/\____/ \___//_/|_|  (_)
+    
+Version Information: 
+	BasicSR: 1.3.5
+	PyTorch: 2.1.2
+	TorchVision: 0.16.2
+2024-04-26 11:25:29,854 INFO: 
+  name: train_SwinFIR-T_SRx4_CUSTOM
+  model_type: SwinFIRModel
+  scale: 4
+  num_gpu: 1
+  manual_seed: 0
+  gt_usm: True
+  resize_prob: [0.2, 0.7, 0.1]
+  resize_range: [0.2, 1.5]
+  gaussian_noise_prob: 0.5
+  noise_range: [1, 20]
+  poisson_scale_range: [0.05, 2]
+  gray_noise_prob: 0.4
+  jpeg_range: [50, 95]
+  second_blur_prob: 0.8
+  resize_prob2: [0.3, 0.4, 0.3]
+  resize_range2: [0.3, 1.2]
+  gaussian_noise_prob2: 0.5
+  noise_range2: [1, 15]
+  poisson_scale_range2: [0.05, 1.5]
+  gray_noise_prob2: 0.4
+  jpeg_range2: [70, 95]
+  gt_size: 512
+  queue_size: 176
+  datasets:[
+    train:[
+      name: FFHQ_train
+      type: FFHQsubDataset
+      dataroot_gt: data/FFHQ/train/GT
+      meta_info: data/FFHQ/train/meta_info_FFHQ5000sub_GT.txt
+      io_backend:[
+        type: disk
+      ]
+      blur_kernel_size: 21
+      kernel_list: ['iso', 'aniso', 'generalized_iso', 'generalized_aniso', 'plateau_iso', 'plateau_aniso']
+      kernel_prob: [0.45, 0.25, 0.12, 0.03, 0.12, 0.03]
+      sinc_prob: 0.1
+      blur_sigma: [0.2, 3]
+      betag_range: [0.5, 4]
+      betap_range: [1, 2]
+      blur_kernel_size2: 21
+      kernel_list2: ['iso', 'aniso', 'generalized_iso', 'generalized_aniso', 'plateau_iso', 'plateau_aniso']
+      kernel_prob2: [0.45, 0.25, 0.12, 0.03, 0.12, 0.03]
+      sinc_prob2: 0.1
+      blur_sigma2: [0.2, 1.5]
+      betag_range2: [0.5, 4]
+      betap_range2: [1, 2]
+      final_sinc_prob: 0.8
+      gt_size: 512
+      use_hflip: True
+      use_rot: False
+      use_shuffle: True
+      num_worker_per_gpu: 6
+      batch_size_per_gpu: 8
+      dataset_enlarge_ratio: 1000
+      prefetch_mode: None
+      phase: train
+      scale: 4
+    ]
+    val:[
+      name: FFHQ_val
+      type: PairedImageDataset
+      dataroot_gt: data/FFHQ/val/GT
+      dataroot_lq: data/FFHQ/val/LQ
+      io_backend:[
+        type: disk
+      ]
+      phase: val
+      scale: 4
+    ]
+  ]
+  network_g:[
+    type: SwinFIR
+    upscale: 4
+    in_chans: 3
+    img_size: 64
+    window_size: 16
+    img_range: 1.0
+    depths: [6, 5, 5, 6]
+    embed_dim: 64
+    num_heads: [8, 8, 8, 8]
+    mlp_ratio: 2
+    upsampler: pixelshuffledirect
+    resi_connection: HSFB
+  ]
+  path:[
+    pretrain_network_g: None
+    strict_load_g: True
+    resume_state: None
+    experiments_root: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM
+    models: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/models
+    training_states: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/training_states
+    log: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM
+    visualization: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/visualization
+  ]
+  train:[
+    ema_decay: 0.999
+    optim_g:[
+      type: Adam
+      lr: 0.0002
+      weight_decay: 0
+      betas: [0.9, 0.99]
+    ]
+    scheduler:[
+      type: CosineAnnealingRestartLR
+      periods: [30000, 60000]
+      restart_weights: [1, 1]
+      eta_min: 1e-07
+    ]
+    total_iter: 200000
+    warmup_iter: -1
+    pixel_opt:[
+      type: CharbonnierLossColor
+      loss_weight: 1.0
+      reduction: mean
+    ]
+  ]
+  val:[
+    val_freq: 200.0
+    save_img: True
+    metrics:[
+      psnr:[
+        type: calculate_psnr
+        crop_border: 0
+        test_y_channel: False
+        better: higher
+      ]
+      niqe:[
+        type: calculate_ssim
+        crop_border: 0
+        better: higher
+      ]
+    ]
+  ]
+  logger:[
+    print_freq: 100
+    save_checkpoint_freq: 5000.0
+    use_tb_logger: True
+    wandb:[
+      project: None
+      resume_id: None
+    ]
+  ]
+  dist_params:[
+    backend: nccl
+    port: 29500
+  ]
+  dist: False
+  rank: 0
+  world_size: 1
+  auto_resume: False
+  is_train: True
+  root_path: /home/msai/bugn0001/ai6126-project-2/SwinFIR
+
+2024-04-26 11:25:30,047 INFO: Dataset [FFHQsubDataset] - FFHQ_train is built.
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 6 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+2024-04-26 11:25:30,048 INFO: Training statistics:
+	Number of train images: 5000
+	Dataset enlarge ratio: 1000
+	Batch size per gpu: 8
+	World size (gpu number): 1
+	Require iter number per epoch: 625000
+	Total epochs: 1; iters: 200000.
+2024-04-26 11:25:30,060 INFO: Dataset [PairedImageDataset] - FFHQ_val is built.
+2024-04-26 11:25:30,060 INFO: Number of val images/folders in FFHQ_val: 400
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torch/functional.py:504: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/aten/src/ATen/native/TensorShape.cpp:3526.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+2024-04-26 11:25:30,203 INFO: Network [SwinFIR] is created.
+2024-04-26 11:25:30,459 INFO: Network: SwinFIR, with parameters: 1,186,464
+2024-04-26 11:25:30,459 INFO: SwinFIR(
+  (conv_first): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (patch_embed): PatchEmbed(
+    (norm): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+  )
+  (patch_unembed): PatchUnEmbed()
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (layers): ModuleList(
+    (0): RSTB(
+      (residual_group): BasicLayer(
+        dim=64, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): Identity()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): SFB(
+        (S): ResB(
+          (body): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+            (2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+        (F): SpectralTransform(
+          (conv1): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (fu): FourierUnit(
+            (conv_layer): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+            (relu): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (conv2): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (fusion): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (1-2): 2 x RSTB(
+      (residual_group): BasicLayer(
+        dim=64, input_resolution=(64, 64), depth=5
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): SFB(
+        (S): ResB(
+          (body): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+            (2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+        (F): SpectralTransform(
+          (conv1): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (fu): FourierUnit(
+            (conv_layer): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+            (relu): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (conv2): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (fusion): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (3): RSTB(
+      (residual_group): BasicLayer(
+        dim=64, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): SFB(
+        (S): ResB(
+          (body): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+            (2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+        (F): SpectralTransform(
+          (conv1): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (fu): FourierUnit(
+            (conv_layer): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+            (relu): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (conv2): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (fusion): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+  )
+  (norm): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+  (conv_after_body): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (upsample): UpsampleOneStep(
+    (0): Conv2d(64, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): PixelShuffle(upscale_factor=4)
+  )
+)
+2024-04-26 11:25:30,460 INFO: Use Exponential Moving Average with decay: 0.999
+2024-04-26 11:25:30,590 INFO: Network [SwinFIR] is created.
+2024-04-26 11:25:30,640 INFO: Loss [CharbonnierLossColor] is created.
+2024-04-26 11:25:30,670 INFO: Model [SwinFIRModel] is created.
+2024-04-26 11:25:32,768 INFO: Start training from epoch: 0, iter: 0
+2024-04-26 11:28:12,792 INFO: [train..][epoch:  0, iter:     100, lr:(2.000e-04,)] [eta: 3 days, 10:39:37, time (data): 1.600 (0.038)] l_pix: 6.1802e-02 
+2024-04-26 11:30:44,145 INFO: [train..][epoch:  0, iter:     200, lr:(2.000e-04,)] [eta: 3 days, 11:18:23, time (data): 1.557 (0.022)] l_pix: 4.7985e-02 
+Traceback (most recent call last):
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/train.py", line 10, in <module>
+    train_pipeline(root_path)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/train.py", line 193, in train_pipeline
+    model.validation(val_loader, current_iter, tb_logger, opt['val']['save_img'])
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/models/base_model.py", line 48, in validation
+    self.nondist_validation(dataloader, current_iter, tb_logger, save_img)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/models/sr_model.py", line 156, in nondist_validation
+    self.feed_data(val_data)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/models/swinfir_model.py", line 80, in feed_data
+    self.kernel1 = data['kernel1'].to(self.device)
+KeyError: 'kernel1'

@@ -1,0 +1,16 @@
+/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/infer.py", line 6, in <module>
+    from swinfir.archs.swinfir_arch import SwinFIR
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/__init__.py", line 2, in <module>
+    from .data import *
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/data/__init__.py", line 11, in <module>
+    _dataset_modules = [importlib.import_module(f'swinfir.data.{file_name}') for file_name in dataset_filenames]
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/data/__init__.py", line 11, in <listcomp>
+    _dataset_modules = [importlib.import_module(f'swinfir.data.{file_name}') for file_name in dataset_filenames]
+  File "/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/data/paired_da_image_dataset.py", line 9, in <module>
+    from basicsr.utils.matlab_functions import bgr2ycbcr
+ImportError: cannot import name 'bgr2ycbcr' from 'basicsr.utils.matlab_functions' (/home/msai/bugn0001/.conda/envs/acv/lib/python3.10/site-packages/basicsr/utils/matlab_functions.py)

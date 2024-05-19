@@ -1,0 +1,5 @@
+Testing 0 00000
+SHAPE BEFORE PATCH EMBED: torch.Size([1, 64, 132, 132])
+SHAPE AFTER PATCH EMBED: torch.Size([1, 17424, 64])
+X shape after view: torch.Size([1, 132, 132, 64])
+Shifted X shape: torch.Size([1, 132, 132, 64])

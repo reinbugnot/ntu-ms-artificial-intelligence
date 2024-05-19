@@ -1,0 +1,756 @@
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py:5: UserWarning: The torchvision.transforms.functional_tensor module is deprecated in 0.15 and will be **removed in 0.17**. Please don't rely on it. You probably just need to use APIs in torchvision.transforms.functional or in torchvision.transforms.v2.functional.
+  warnings.warn(
+2024-04-25 21:40:11,233 INFO: 
+                ____                _       _____  ____
+               / __ ) ____ _ _____ (_)_____/ ___/ / __ \
+              / __  |/ __ `// ___// // ___/\__ \ / /_/ /
+             / /_/ // /_/ /(__  )/ // /__ ___/ // _, _/
+            /_____/ \__,_//____//_/ \___//____//_/ |_|
+     ______                   __   __                 __      __
+    / ____/____   ____   ____/ /  / /   __  __ _____ / /__   / /
+   / / __ / __ \ / __ \ / __  /  / /   / / / // ___// //_/  / /
+  / /_/ // /_/ // /_/ // /_/ /  / /___/ /_/ // /__ / /<    /_/
+  \____/ \____/ \____/ \____/  /_____/\____/ \___//_/|_|  (_)
+    
+Version Information: 
+	BasicSR: 1.3.5
+	PyTorch: 2.1.2
+	TorchVision: 0.16.2
+2024-04-25 21:40:11,233 INFO: 
+  name: train_SwinFIR-T_SRx4_CUSTOM
+  model_type: SwinFIRModel
+  scale: 4
+  num_gpu: 1
+  manual_seed: 0
+  gt_usm: True
+  resize_prob: [0.2, 0.7, 0.1]
+  resize_range: [0.2, 1.5]
+  gaussian_noise_prob: 0.5
+  noise_range: [1, 20]
+  poisson_scale_range: [0.05, 2]
+  gray_noise_prob: 0.4
+  jpeg_range: [50, 95]
+  second_blur_prob: 0.8
+  resize_prob2: [0.3, 0.4, 0.3]
+  resize_range2: [0.3, 1.2]
+  gaussian_noise_prob2: 0.5
+  noise_range2: [1, 15]
+  poisson_scale_range2: [0.05, 1.5]
+  gray_noise_prob2: 0.4
+  jpeg_range2: [70, 95]
+  gt_size: 512
+  queue_size: 176
+  datasets:[
+    train:[
+      name: FFHQ_train
+      type: FFHQsubDataset
+      dataroot_gt: data/FFHQ/train/GT
+      meta_info: data/FFHQ/train/meta_info_FFHQ5000sub_GT.txt
+      io_backend:[
+        type: disk
+      ]
+      blur_kernel_size: 21
+      kernel_list: ['iso', 'aniso', 'generalized_iso', 'generalized_aniso', 'plateau_iso', 'plateau_aniso']
+      kernel_prob: [0.45, 0.25, 0.12, 0.03, 0.12, 0.03]
+      sinc_prob: 0.1
+      blur_sigma: [0.2, 3]
+      betag_range: [0.5, 4]
+      betap_range: [1, 2]
+      blur_kernel_size2: 21
+      kernel_list2: ['iso', 'aniso', 'generalized_iso', 'generalized_aniso', 'plateau_iso', 'plateau_aniso']
+      kernel_prob2: [0.45, 0.25, 0.12, 0.03, 0.12, 0.03]
+      sinc_prob2: 0.1
+      blur_sigma2: [0.2, 1.5]
+      betag_range2: [0.5, 4]
+      betap_range2: [1, 2]
+      final_sinc_prob: 0.8
+      gt_size: 512
+      use_hflip: True
+      use_rot: False
+      use_shuffle: True
+      num_worker_per_gpu: 6
+      batch_size_per_gpu: 8
+      dataset_enlarge_ratio: 1000
+      prefetch_mode: None
+      phase: train
+      scale: 4
+    ]
+    val:[
+      name: FFHQ_val
+      type: PairedImageDataset
+      dataroot_gt: data/FFHQ/val/GT
+      dataroot_lq: data/FFHQ/val/LQ
+      io_backend:[
+        type: disk
+      ]
+      phase: val
+      scale: 4
+    ]
+  ]
+  network_g:[
+    type: SwinFIR
+    upscale: 4
+    in_chans: 3
+    img_size: 64
+    window_size: 16
+    img_range: 1.0
+    depths: [6, 5, 5, 6]
+    embed_dim: 64
+    num_heads: [8, 8, 8, 8]
+    mlp_ratio: 2
+    upsampler: pixelshuffledirect
+    resi_connection: HSFB
+  ]
+  path:[
+    pretrain_network_g: None
+    strict_load_g: True
+    resume_state: None
+    experiments_root: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM
+    models: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/models
+    training_states: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/training_states
+    log: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM
+    visualization: /home/msai/bugn0001/ai6126-project-2/SwinFIR/experiments/train_SwinFIR-T_SRx4_CUSTOM/visualization
+  ]
+  train:[
+    ema_decay: 0.999
+    optim_g:[
+      type: Adam
+      lr: 0.0002
+      weight_decay: 0
+      betas: [0.9, 0.99]
+    ]
+    scheduler:[
+      type: CosineAnnealingRestartLR
+      periods: [150000, 150000]
+      restart_weights: [1, 1]
+      eta_min: 1e-07
+    ]
+    total_iter: 200000
+    warmup_iter: -1
+    pixel_opt:[
+      type: CharbonnierLossColor
+      loss_weight: 1.0
+      reduction: mean
+    ]
+  ]
+  val:[
+    val_freq: 10000.0
+    save_img: False
+    pbar: False
+    metrics:[
+      psnr:[
+        type: calculate_psnr
+        crop_border: 4
+        test_y_channel: True
+        better: higher
+      ]
+      ssim:[
+        type: calculate_ssim
+        crop_border: 4
+        test_y_channel: True
+        better: higher
+      ]
+    ]
+  ]
+  logger:[
+    print_freq: 100
+    save_checkpoint_freq: 10000.0
+    use_tb_logger: True
+    wandb:[
+      project: None
+      resume_id: None
+    ]
+  ]
+  dist_params:[
+    backend: nccl
+    port: 29500
+  ]
+  dist: False
+  rank: 0
+  world_size: 1
+  auto_resume: False
+  is_train: True
+  root_path: /home/msai/bugn0001/ai6126-project-2/SwinFIR
+
+2024-04-25 21:40:11,361 INFO: Dataset [FFHQsubDataset] - FFHQ_train is built.
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 6 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+2024-04-25 21:40:11,362 INFO: Training statistics:
+	Number of train images: 5000
+	Dataset enlarge ratio: 1000
+	Batch size per gpu: 8
+	World size (gpu number): 1
+	Require iter number per epoch: 625000
+	Total epochs: 1; iters: 200000.
+2024-04-25 21:40:11,374 INFO: Dataset [PairedImageDataset] - FFHQ_val is built.
+2024-04-25 21:40:11,375 INFO: Number of val images/folders in FFHQ_val: 400
+/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torch/functional.py:504: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/aten/src/ATen/native/TensorShape.cpp:3526.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+2024-04-25 21:40:11,520 INFO: Network [SwinFIR] is created.
+2024-04-25 21:40:11,783 INFO: Network: SwinFIR, with parameters: 1,186,464
+2024-04-25 21:40:11,783 INFO: SwinFIR(
+  (conv_first): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (patch_embed): PatchEmbed(
+    (norm): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+  )
+  (patch_unembed): PatchUnEmbed()
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (layers): ModuleList(
+    (0): RSTB(
+      (residual_group): BasicLayer(
+        dim=64, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): Identity()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): SFB(
+        (S): ResB(
+          (body): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+            (2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+        (F): SpectralTransform(
+          (conv1): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (fu): FourierUnit(
+            (conv_layer): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+            (relu): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (conv2): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (fusion): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (1-2): 2 x RSTB(
+      (residual_group): BasicLayer(
+        dim=64, input_resolution=(64, 64), depth=5
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): SFB(
+        (S): ResB(
+          (body): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+            (2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+        (F): SpectralTransform(
+          (conv1): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (fu): FourierUnit(
+            (conv_layer): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+            (relu): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (conv2): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (fusion): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+    (3): RSTB(
+      (residual_group): BasicLayer(
+        dim=64, input_resolution=(64, 64), depth=6
+        (blocks): ModuleList(
+          (0): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (2): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (3): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (4): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=0, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (5): SwinTransformerBlock(
+            dim=64, input_resolution=(64, 64), num_heads=8, window_size=16, shift_size=8, mlp_ratio=2
+            (norm1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (attn): WindowAttention(
+              dim=64, window_size=(16, 16), num_heads=8
+              (qkv): Linear(in_features=64, out_features=192, bias=True)
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Linear(in_features=64, out_features=64, bias=True)
+              (proj_drop): Dropout(p=0.0, inplace=False)
+              (softmax): Softmax(dim=-1)
+            )
+            (drop_path): DropPath()
+            (norm2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): Mlp(
+              (fc1): Linear(in_features=64, out_features=128, bias=True)
+              (act): GELU(approximate='none')
+              (fc2): Linear(in_features=128, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+        )
+      )
+      (conv): SFB(
+        (S): ResB(
+          (body): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+            (2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+        (F): SpectralTransform(
+          (conv1): Sequential(
+            (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+            (1): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (fu): FourierUnit(
+            (conv_layer): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+            (relu): LeakyReLU(negative_slope=0.2, inplace=True)
+          )
+          (conv2): Conv2d(32, 64, kernel_size=(1, 1), stride=(1, 1))
+        )
+        (fusion): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (patch_embed): PatchEmbed()
+      (patch_unembed): PatchUnEmbed()
+    )
+  )
+  (norm): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+  (conv_after_body): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (upsample): UpsampleOneStep(
+    (0): Conv2d(64, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (1): PixelShuffle(upscale_factor=4)
+  )
+)
+2024-04-25 21:40:11,784 INFO: Use Exponential Moving Average with decay: 0.999
+2024-04-25 21:40:11,920 INFO: Network [SwinFIR] is created.
+2024-04-25 21:40:11,971 INFO: Loss [CharbonnierLossColor] is created.
+2024-04-25 21:40:12,002 INFO: Model [SwinFIRModel] is created.
+2024-04-25 21:40:14,228 INFO: Start training from epoch: 0, iter: 0
+2024-04-25 21:42:56,015 INFO: [train..][epoch:  0, iter:     100, lr:(2.000e-04,)] [eta: 3 days, 11:13:02, time (data): 1.618 (0.044)] l_pix: 6.1796e-02 
+2024-04-25 21:45:28,047 INFO: [train..][epoch:  0, iter:     200, lr:(2.000e-04,)] [eta: 3 days, 11:46:25, time (data): 1.569 (0.026)] l_pix: 4.8154e-02 
+2024-04-25 21:47:59,980 INFO: [train..][epoch:  0, iter:     300, lr:(2.000e-04,)] [eta: 3 days, 11:54:50, time (data): 1.519 (0.007)] l_pix: 5.7098e-02 
+2024-04-25 21:50:32,075 INFO: [train..][epoch:  0, iter:     400, lr:(2.000e-04,)] [eta: 3 days, 11:59:08, time (data): 1.520 (0.007)] l_pix: 5.2320e-02 
+2024-04-25 21:53:03,887 INFO: [train..][epoch:  0, iter:     500, lr:(2.000e-04,)] [eta: 3 days, 11:58:49, time (data): 1.518 (0.007)] l_pix: 4.6680e-02 
+2024-04-25 21:55:35,813 INFO: [train..][epoch:  0, iter:     600, lr:(2.000e-04,)] [eta: 3 days, 11:58:24, time (data): 1.519 (0.007)] l_pix: 4.8249e-02 
+2024-04-25 21:58:07,496 INFO: [train..][epoch:  0, iter:     700, lr:(2.000e-04,)] [eta: 3 days, 11:56:14, time (data): 1.517 (0.007)] l_pix: 5.9711e-02 
+2024-04-25 22:00:40,759 INFO: [train..][epoch:  0, iter:     800, lr:(2.000e-04,)] [eta: 3 days, 12:00:31, time (data): 1.525 (0.007)] l_pix: 5.5013e-02 
+2024-04-25 22:03:14,991 INFO: [train..][epoch:  0, iter:     900, lr:(2.000e-04,)] [eta: 3 days, 12:06:52, time (data): 1.542 (0.006)] l_pix: 4.8882e-02 
+2024-04-25 22:05:49,377 INFO: [train..][epoch:  0, iter:   1,000, lr:(2.000e-04,)] [eta: 3 days, 12:11:56, time (data): 1.543 (0.007)] l_pix: 4.4328e-02 
+2024-04-25 22:08:22,941 INFO: [train..][epoch:  0, iter:   1,100, lr:(2.000e-04,)] [eta: 3 days, 12:13:08, time (data): 1.535 (0.007)] l_pix: 4.7228e-02 
+2024-04-25 22:10:56,434 INFO: [train..][epoch:  0, iter:   1,200, lr:(2.000e-04,)] [eta: 3 days, 12:13:31, time (data): 1.535 (0.007)] l_pix: 4.5048e-02 
+2024-04-25 22:13:30,076 INFO: [train..][epoch:  0, iter:   1,300, lr:(2.000e-04,)] [eta: 3 days, 12:13:50, time (data): 1.536 (0.007)] l_pix: 4.6406e-02 
+2024-04-25 22:16:03,605 INFO: [train..][epoch:  0, iter:   1,400, lr:(2.000e-04,)] [eta: 3 days, 12:13:28, time (data): 1.536 (0.007)] l_pix: 3.7493e-02 
+2024-04-25 22:18:36,914 INFO: [train..][epoch:  0, iter:   1,500, lr:(2.000e-04,)] [eta: 3 days, 12:12:19, time (data): 1.531 (0.007)] l_pix: 4.0826e-02 
+2024-04-25 22:21:09,912 INFO: [train..][epoch:  0, iter:   1,600, lr:(1.999e-04,)] [eta: 3 days, 12:10:21, time (data): 1.531 (0.007)] l_pix: 5.2624e-02 
+2024-04-25 22:23:42,802 INFO: [train..][epoch:  0, iter:   1,700, lr:(1.999e-04,)] [eta: 3 days, 12:08:07, time (data): 1.530 (0.007)] l_pix: 4.9543e-02 
+2024-04-25 22:26:15,942 INFO: [train..][epoch:  0, iter:   1,800, lr:(1.999e-04,)] [eta: 3 days, 12:06:18, time (data): 1.530 (0.007)] l_pix: 4.1269e-02 
+2024-04-25 22:28:49,016 INFO: [train..][epoch:  0, iter:   1,900, lr:(1.999e-04,)] [eta: 3 days, 12:04:17, time (data): 1.531 (0.007)] l_pix: 4.5973e-02 
+2024-04-25 22:31:21,994 INFO: [train..][epoch:  0, iter:   2,000, lr:(1.999e-04,)] [eta: 3 days, 12:02:04, time (data): 1.530 (0.007)] l_pix: 5.1006e-02 
+2024-04-25 22:33:54,592 INFO: [train..][epoch:  0, iter:   2,100, lr:(1.999e-04,)] [eta: 3 days, 11:59:13, time (data): 1.525 (0.007)] l_pix: 4.5272e-02 
+2024-04-25 22:36:27,289 INFO: [train..][epoch:  0, iter:   2,200, lr:(1.999e-04,)] [eta: 3 days, 11:56:33, time (data): 1.526 (0.007)] l_pix: 5.1131e-02 
+2024-04-25 22:39:00,056 INFO: [train..][epoch:  0, iter:   2,300, lr:(1.999e-04,)] [eta: 3 days, 11:53:59, time (data): 1.528 (0.007)] l_pix: 4.5610e-02 
+2024-04-25 22:41:32,129 INFO: [train..][epoch:  0, iter:   2,400, lr:(1.999e-04,)] [eta: 3 days, 11:50:28, time (data): 1.524 (0.007)] l_pix: 5.1884e-02 
+2024-04-25 22:44:04,039 INFO: [train..][epoch:  0, iter:   2,500, lr:(1.999e-04,)] [eta: 3 days, 11:46:49, time (data): 1.519 (0.007)] l_pix: 4.1225e-02 
+2024-04-25 22:46:36,240 INFO: [train..][epoch:  0, iter:   2,600, lr:(1.999e-04,)] [eta: 3 days, 11:43:37, time (data): 1.520 (0.007)] l_pix: 4.6860e-02 
+2024-04-25 22:49:08,006 INFO: [train..][epoch:  0, iter:   2,700, lr:(1.998e-04,)] [eta: 3 days, 11:39:57, time (data): 1.517 (0.007)] l_pix: 5.0766e-02 
+2024-04-25 22:51:39,846 INFO: [train..][epoch:  0, iter:   2,800, lr:(1.998e-04,)] [eta: 3 days, 11:36:26, time (data): 1.518 (0.007)] l_pix: 3.7676e-02 
+2024-04-25 22:54:11,516 INFO: [train..][epoch:  0, iter:   2,900, lr:(1.998e-04,)] [eta: 3 days, 11:32:49, time (data): 1.517 (0.007)] l_pix: 4.4754e-02 
+2024-04-25 22:56:43,259 INFO: [train..][epoch:  0, iter:   3,000, lr:(1.998e-04,)] [eta: 3 days, 11:29:20, time (data): 1.517 (0.007)] l_pix: 4.6694e-02 
+2024-04-25 22:59:15,079 INFO: [train..][epoch:  0, iter:   3,100, lr:(1.998e-04,)] [eta: 3 days, 11:26:00, time (data): 1.519 (0.007)] l_pix: 4.5497e-02 
+2024-04-25 23:01:46,660 INFO: [train..][epoch:  0, iter:   3,200, lr:(1.998e-04,)] [eta: 3 days, 11:22:28, time (data): 1.517 (0.007)] l_pix: 4.7527e-02 
+2024-04-25 23:04:18,312 INFO: [train..][epoch:  0, iter:   3,300, lr:(1.998e-04,)] [eta: 3 days, 11:19:04, time (data): 1.517 (0.007)] l_pix: 4.1795e-02 
+2024-04-25 23:06:50,040 INFO: [train..][epoch:  0, iter:   3,400, lr:(1.997e-04,)] [eta: 3 days, 11:15:47, time (data): 1.517 (0.007)] l_pix: 4.5470e-02 
+2024-04-25 23:09:21,956 INFO: [train..][epoch:  0, iter:   3,500, lr:(1.997e-04,)] [eta: 3 days, 11:12:44, time (data): 1.519 (0.007)] l_pix: 3.8969e-02 
+2024-04-25 23:11:53,549 INFO: [train..][epoch:  0, iter:   3,600, lr:(1.997e-04,)] [eta: 3 days, 11:09:25, time (data): 1.517 (0.007)] l_pix: 4.4326e-02 
+2024-04-25 23:14:24,977 INFO: [train..][epoch:  0, iter:   3,700, lr:(1.997e-04,)] [eta: 3 days, 11:05:59, time (data): 1.514 (0.007)] l_pix: 3.8412e-02 
+2024-04-25 23:16:56,564 INFO: [train..][epoch:  0, iter:   3,800, lr:(1.997e-04,)] [eta: 3 days, 11:02:45, time (data): 1.515 (0.007)] l_pix: 4.4786e-02 
+2024-04-25 23:19:28,240 INFO: [train..][epoch:  0, iter:   3,900, lr:(1.997e-04,)] [eta: 3 days, 10:59:37, time (data): 1.516 (0.007)] l_pix: 3.7783e-02 
+2024-04-25 23:22:00,035 INFO: [train..][epoch:  0, iter:   4,000, lr:(1.996e-04,)] [eta: 3 days, 10:56:37, time (data): 1.517 (0.007)] l_pix: 3.8623e-02 
+2024-04-25 23:24:31,742 INFO: [train..][epoch:  0, iter:   4,100, lr:(1.996e-04,)] [eta: 3 days, 10:53:34, time (data): 1.517 (0.007)] l_pix: 4.3161e-02 
+2024-04-25 23:27:03,294 INFO: [train..][epoch:  0, iter:   4,200, lr:(1.996e-04,)] [eta: 3 days, 10:50:26, time (data): 1.516 (0.007)] l_pix: 4.5374e-02 
+2024-04-25 23:29:34,978 INFO: [train..][epoch:  0, iter:   4,300, lr:(1.996e-04,)] [eta: 3 days, 10:47:25, time (data): 1.517 (0.007)] l_pix: 3.7606e-02 
+2024-04-25 23:32:06,504 INFO: [train..][epoch:  0, iter:   4,400, lr:(1.996e-04,)] [eta: 3 days, 10:44:18, time (data): 1.516 (0.007)] l_pix: 4.5437e-02 
+2024-04-25 23:34:37,974 INFO: [train..][epoch:  0, iter:   4,500, lr:(1.996e-04,)] [eta: 3 days, 10:41:11, time (data): 1.515 (0.007)] l_pix: 3.4279e-02 
+2024-04-25 23:37:09,579 INFO: [train..][epoch:  0, iter:   4,600, lr:(1.995e-04,)] [eta: 3 days, 10:38:11, time (data): 1.516 (0.007)] l_pix: 4.6547e-02 
+2024-04-25 23:39:41,102 INFO: [train..][epoch:  0, iter:   4,700, lr:(1.995e-04,)] [eta: 3 days, 10:35:08, time (data): 1.515 (0.007)] l_pix: 4.2970e-02 
+2024-04-25 23:42:12,660 INFO: [train..][epoch:  0, iter:   4,800, lr:(1.995e-04,)] [eta: 3 days, 10:32:09, time (data): 1.515 (0.007)] l_pix: 4.4075e-02 
+2024-04-25 23:44:44,309 INFO: [train..][epoch:  0, iter:   4,900, lr:(1.995e-04,)] [eta: 3 days, 10:29:14, time (data): 1.517 (0.007)] l_pix: 4.4462e-02 
+2024-04-25 23:47:15,862 INFO: [train..][epoch:  0, iter:   5,000, lr:(1.995e-04,)] [eta: 3 days, 10:26:16, time (data): 1.516 (0.007)] l_pix: 3.6908e-02 
+2024-04-25 23:49:47,667 INFO: [train..][epoch:  0, iter:   5,100, lr:(1.994e-04,)] [eta: 3 days, 10:23:29, time (data): 1.519 (0.007)] l_pix: 4.2237e-02 
+2024-04-25 23:52:19,212 INFO: [train..][epoch:  0, iter:   5,200, lr:(1.994e-04,)] [eta: 3 days, 10:20:33, time (data): 1.517 (0.007)] l_pix: 3.9496e-02 
+2024-04-25 23:54:50,854 INFO: [train..][epoch:  0, iter:   5,300, lr:(1.994e-04,)] [eta: 3 days, 10:17:41, time (data): 1.517 (0.007)] l_pix: 4.5692e-02 
+2024-04-25 23:57:22,677 INFO: [train..][epoch:  0, iter:   5,400, lr:(1.994e-04,)] [eta: 3 days, 10:14:57, time (data): 1.518 (0.007)] l_pix: 4.1097e-02 
+2024-04-25 23:59:54,329 INFO: [train..][epoch:  0, iter:   5,500, lr:(1.993e-04,)] [eta: 3 days, 10:12:07, time (data): 1.517 (0.007)] l_pix: 4.3082e-02 
+2024-04-26 00:02:25,388 INFO: [train..][epoch:  0, iter:   5,600, lr:(1.993e-04,)] [eta: 3 days, 10:08:57, time (data): 1.513 (0.007)] l_pix: 4.3413e-02 
+2024-04-26 00:04:56,617 INFO: [train..][epoch:  0, iter:   5,700, lr:(1.993e-04,)] [eta: 3 days, 10:05:54, time (data): 1.512 (0.007)] l_pix: 4.3614e-02 
+2024-04-26 00:07:27,799 INFO: [train..][epoch:  0, iter:   5,800, lr:(1.993e-04,)] [eta: 3 days, 10:02:50, time (data): 1.512 (0.007)] l_pix: 4.3498e-02 
+2024-04-26 00:09:59,094 INFO: [train..][epoch:  0, iter:   5,900, lr:(1.992e-04,)] [eta: 3 days, 9:59:52, time (data): 1.513 (0.007)] l_pix: 4.4201e-02 
+2024-04-26 00:12:30,293 INFO: [train..][epoch:  0, iter:   6,000, lr:(1.992e-04,)] [eta: 3 days, 9:56:51, time (data): 1.513 (0.007)] l_pix: 3.8561e-02 
+2024-04-26 00:15:01,676 INFO: [train..][epoch:  0, iter:   6,100, lr:(1.992e-04,)] [eta: 3 days, 9:53:57, time (data): 1.513 (0.007)] l_pix: 4.2973e-02 
+2024-04-26 00:17:32,858 INFO: [train..][epoch:  0, iter:   6,200, lr:(1.992e-04,)] [eta: 3 days, 9:50:58, time (data): 1.512 (0.007)] l_pix: 3.9061e-02 
+2024-04-26 00:20:04,046 INFO: [train..][epoch:  0, iter:   6,300, lr:(1.991e-04,)] [eta: 3 days, 9:48:00, time (data): 1.511 (0.007)] l_pix: 4.4247e-02 
+2024-04-26 00:22:35,216 INFO: [train..][epoch:  0, iter:   6,400, lr:(1.991e-04,)] [eta: 3 days, 9:45:02, time (data): 1.512 (0.007)] l_pix: 4.1142e-02 
+2024-04-26 00:25:06,476 INFO: [train..][epoch:  0, iter:   6,500, lr:(1.991e-04,)] [eta: 3 days, 9:42:07, time (data): 1.512 (0.007)] l_pix: 4.5769e-02 
+2024-04-26 00:27:37,836 INFO: [train..][epoch:  0, iter:   6,600, lr:(1.990e-04,)] [eta: 3 days, 9:39:16, time (data): 1.513 (0.007)] l_pix: 3.9761e-02 
+2024-04-26 00:30:09,075 INFO: [train..][epoch:  0, iter:   6,700, lr:(1.990e-04,)] [eta: 3 days, 9:36:22, time (data): 1.512 (0.007)] l_pix: 3.9638e-02 
+2024-04-26 00:32:40,420 INFO: [train..][epoch:  0, iter:   6,800, lr:(1.990e-04,)] [eta: 3 days, 9:33:32, time (data): 1.513 (0.007)] l_pix: 4.0940e-02 
+2024-04-26 00:35:11,319 INFO: [train..][epoch:  0, iter:   6,900, lr:(1.990e-04,)] [eta: 3 days, 9:30:30, time (data): 1.508 (0.007)] l_pix: 4.0377e-02 
+2024-04-26 00:37:42,002 INFO: [train..][epoch:  0, iter:   7,000, lr:(1.989e-04,)] [eta: 3 days, 9:27:23, time (data): 1.507 (0.007)] l_pix: 4.2625e-02 
+2024-04-26 00:40:13,412 INFO: [train..][epoch:  0, iter:   7,100, lr:(1.989e-04,)] [eta: 3 days, 9:24:37, time (data): 1.517 (0.007)] l_pix: 3.5373e-02 
+2024-04-26 00:42:45,242 INFO: [train..][epoch:  0, iter:   7,200, lr:(1.989e-04,)] [eta: 3 days, 9:22:02, time (data): 1.518 (0.007)] l_pix: 3.7757e-02 
+2024-04-26 00:45:16,677 INFO: [train..][epoch:  0, iter:   7,300, lr:(1.988e-04,)] [eta: 3 days, 9:19:17, time (data): 1.514 (0.007)] l_pix: 3.5385e-02 
+2024-04-26 00:47:48,156 INFO: [train..][epoch:  0, iter:   7,400, lr:(1.988e-04,)] [eta: 3 days, 9:16:33, time (data): 1.515 (0.007)] l_pix: 3.5774e-02 
+2024-04-26 00:50:19,524 INFO: [train..][epoch:  0, iter:   7,500, lr:(1.988e-04,)] [eta: 3 days, 9:13:47, time (data): 1.513 (0.007)] l_pix: 3.9216e-02 
+2024-04-26 00:52:50,846 INFO: [train..][epoch:  0, iter:   7,600, lr:(1.987e-04,)] [eta: 3 days, 9:11:01, time (data): 1.513 (0.007)] l_pix: 4.2522e-02 
+2024-04-26 00:55:22,282 INFO: [train..][epoch:  0, iter:   7,700, lr:(1.987e-04,)] [eta: 3 days, 9:08:17, time (data): 1.515 (0.007)] l_pix: 4.3586e-02 
+2024-04-26 00:57:53,600 INFO: [train..][epoch:  0, iter:   7,800, lr:(1.987e-04,)] [eta: 3 days, 9:05:31, time (data): 1.514 (0.007)] l_pix: 4.4546e-02 
+2024-04-26 01:00:25,057 INFO: [train..][epoch:  0, iter:   7,900, lr:(1.986e-04,)] [eta: 3 days, 9:02:48, time (data): 1.514 (0.007)] l_pix: 3.9782e-02 
+2024-04-26 01:02:56,400 INFO: [train..][epoch:  0, iter:   8,000, lr:(1.986e-04,)] [eta: 3 days, 9:00:04, time (data): 1.514 (0.007)] l_pix: 4.1733e-02 
+2024-04-26 01:05:27,448 INFO: [train..][epoch:  0, iter:   8,100, lr:(1.986e-04,)] [eta: 3 days, 8:57:12, time (data): 1.510 (0.007)] l_pix: 3.6842e-02 
+2024-04-26 01:07:58,454 INFO: [train..][epoch:  0, iter:   8,200, lr:(1.985e-04,)] [eta: 3 days, 8:54:20, time (data): 1.510 (0.007)] l_pix: 4.5064e-02 
+2024-04-26 01:10:29,531 INFO: [train..][epoch:  0, iter:   8,300, lr:(1.985e-04,)] [eta: 3 days, 8:51:30, time (data): 1.512 (0.007)] l_pix: 4.2506e-02 
+2024-04-26 01:13:00,510 INFO: [train..][epoch:  0, iter:   8,400, lr:(1.985e-04,)] [eta: 3 days, 8:48:38, time (data): 1.510 (0.007)] l_pix: 4.0555e-02 
+2024-04-26 01:15:31,563 INFO: [train..][epoch:  0, iter:   8,500, lr:(1.984e-04,)] [eta: 3 days, 8:45:49, time (data): 1.511 (0.007)] l_pix: 4.2678e-02 
+2024-04-26 01:18:02,604 INFO: [train..][epoch:  0, iter:   8,600, lr:(1.984e-04,)] [eta: 3 days, 8:43:00, time (data): 1.511 (0.007)] l_pix: 4.1406e-02 
+2024-04-26 01:20:33,947 INFO: [train..][epoch:  0, iter:   8,700, lr:(1.983e-04,)] [eta: 3 days, 8:40:17, time (data): 1.515 (0.007)] l_pix: 4.4868e-02 
+2024-04-26 01:23:05,143 INFO: [train..][epoch:  0, iter:   8,800, lr:(1.983e-04,)] [eta: 3 days, 8:37:32, time (data): 1.513 (0.007)] l_pix: 4.1909e-02 
+2024-04-26 01:25:36,322 INFO: [train..][epoch:  0, iter:   8,900, lr:(1.983e-04,)] [eta: 3 days, 8:34:47, time (data): 1.511 (0.007)] l_pix: 4.1989e-02 
+2024-04-26 01:28:07,359 INFO: [train..][epoch:  0, iter:   9,000, lr:(1.982e-04,)] [eta: 3 days, 8:31:59, time (data): 1.510 (0.007)] l_pix: 3.8702e-02 
+2024-04-26 01:30:38,430 INFO: [train..][epoch:  0, iter:   9,100, lr:(1.982e-04,)] [eta: 3 days, 8:29:12, time (data): 1.512 (0.007)] l_pix: 4.0906e-02 
+2024-04-26 01:33:09,639 INFO: [train..][epoch:  0, iter:   9,200, lr:(1.982e-04,)] [eta: 3 days, 8:26:28, time (data): 1.512 (0.007)] l_pix: 3.8466e-02 
+2024-04-26 01:35:40,880 INFO: [train..][epoch:  0, iter:   9,300, lr:(1.981e-04,)] [eta: 3 days, 8:23:46, time (data): 1.515 (0.007)] l_pix: 4.0936e-02 
+2024-04-26 01:38:12,216 INFO: [train..][epoch:  0, iter:   9,400, lr:(1.981e-04,)] [eta: 3 days, 8:21:05, time (data): 1.514 (0.007)] l_pix: 3.7520e-02 
+2024-04-26 01:40:43,698 INFO: [train..][epoch:  0, iter:   9,500, lr:(1.980e-04,)] [eta: 3 days, 8:18:27, time (data): 1.515 (0.007)] l_pix: 4.4308e-02 
+2024-04-26 01:43:15,427 INFO: [train..][epoch:  0, iter:   9,600, lr:(1.980e-04,)] [eta: 3 days, 8:15:55, time (data): 1.516 (0.007)] l_pix: 4.8459e-02 
+2024-04-26 01:45:47,433 INFO: [train..][epoch:  0, iter:   9,700, lr:(1.979e-04,)] [eta: 3 days, 8:13:28, time (data): 1.516 (0.007)] l_pix: 3.1881e-02 
+2024-04-26 01:48:18,850 INFO: [train..][epoch:  0, iter:   9,800, lr:(1.979e-04,)] [eta: 3 days, 8:10:49, time (data): 1.515 (0.007)] l_pix: 3.4249e-02 
+2024-04-26 01:50:50,241 INFO: [train..][epoch:  0, iter:   9,900, lr:(1.979e-04,)] [eta: 3 days, 8:08:11, time (data): 1.513 (0.007)] l_pix: 4.1098e-02 
+2024-04-26 01:53:21,596 INFO: [train..][epoch:  0, iter:  10,000, lr:(1.978e-04,)] [eta: 3 days, 8:05:31, time (data): 1.513 (0.007)] l_pix: 3.8253e-02 
+2024-04-26 01:53:21,597 INFO: Saving models and training states.
+Traceback (most recent call last):
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/train.py", line 10, in <module>
+    train_pipeline(root_path)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/train.py", line 193, in train_pipeline
+    model.validation(val_loader, current_iter, tb_logger, opt['val']['save_img'])
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/models/base_model.py", line 48, in validation
+    self.nondist_validation(dataloader, current_iter, tb_logger, save_img)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/basicsr/models/sr_model.py", line 156, in nondist_validation
+    self.feed_data(val_data)
+  File "/home/msai/bugn0001/.conda/envs/acv-swinfir/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/msai/bugn0001/ai6126-project-2/SwinFIR/swinfir/models/swinfir_model.py", line 80, in feed_data
+    self.kernel1 = data['kernel1'].to(self.device)
+KeyError: 'kernel1'
