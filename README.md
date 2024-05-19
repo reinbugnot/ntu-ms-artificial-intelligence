@@ -30,11 +30,7 @@ Please note that all files are in PDF format and do not include any source code.
 
 I have shared these materials with the intention of disseminating knowledge and providing insight into the work involved in the MSAI program. However, I do not condone cheating, plagiarism, or any form of academic dishonesty. I strongly discourage anyone from copying my work for their own academic submissions or professional requirements.
 
-Furthermore, I do not guarantee that all the answers, methods, and code included in these reports are 100% correct. The work presented here reflects my understanding and efforts during my time in the program, and it should be used as a reference only. If you wish to discuss any of the content, feel free to drop an email at reinbugnot@gmail.com
-
-## License
-
-This repository is shared under the [MIT License](LICENSE).
+Furthermore, I do not guarantee that all the answers, methods, and code included in these reports are 100% correct. The work presented here reflects my understanding and efforts during my time in the program, and it should be used as a reference only.
 
 Thank you for visiting my repository. If you have any questions or would like to discuss any of the topics further, feel free to reach out!
 
