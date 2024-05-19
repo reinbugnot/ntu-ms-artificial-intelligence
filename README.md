@@ -16,7 +16,7 @@ Corresponding source codes will be released in the future.
 - **AI6126 - Advanced Computer Vision**
 - **AI6127 - Deep Neural Networks for Natural Language Processing**
 
-I excluded AI6104 - Math of AI due to the lack of PDF-based coursework.
+I excluded AI6104 - Math of AI due to the lack of digital coursework.
 
 ## Contents
 
