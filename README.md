@@ -2,6 +2,7 @@
 
 Welcome to my GitHub repository, which contains the coursework and assignments I completed during my Master of Science in Artificial Intelligence (MSAI) program at Nanyang Technological University, Singapore. Each folder in this repository represents a specific course I took, and within each folder, you will find the papers, reports, and assignments I submitted throughout the program.
 
+Please note that this repo may not be comprehensive and may not necessarily represent the full content of the corresponding courses.
 
 
 ## Course Folders
