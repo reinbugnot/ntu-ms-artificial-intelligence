@@ -2,7 +2,7 @@
 
 Welcome to my GitHub repository, which contains the coursework and assignments I completed during my Master of Science in Artificial Intelligence (MSAI) program at Nanyang Technological University, Singapore. Each folder in this repository represents a specific course I took, and within each folder, you will find the papers, reports, and assignments I submitted throughout the program.
 
-Corresponding source codes will be released in the future.
+
 
 ## Course Folders
 
@@ -26,7 +26,7 @@ Each folder contains the following types of files:
 - **Reports**: Project reports and case studies.
 - **Assignments**: Assignments and problem sets I completed.
 
-Please note that all files are in PDF format and do not include any source code.
+Please note that all files are in PDF format and do not include any source code yet. Corresponding source codes will be released in the future.
 
 ## Disclaimer
 
