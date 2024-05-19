@@ -32,6 +32,8 @@ I have shared these materials with the intention of disseminating knowledge and 
 
 Furthermore, I do not guarantee that all the answers, methods, and code included in these reports are 100% correct. The work presented here reflects my understanding and efforts during my time in the program, and it should be used as a reference only.
 
+Lastly, some papers included here are from group projects that I've participated in. I do not claim full ownership of such papers. Rights belong to the corresponding colleagues who contributed to the work.
+
 Thank you for visiting my repository. If you have any questions or would like to discuss any of the topics further, feel free to reach out!
 
 ---
